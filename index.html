@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST JavaScript</title>
+
+
+</head>
+<body>
+
+
+    <button onclick="GetBooks()">Oprimeme</button>
+    <button onclick="addBook()">New Book</button>
+
+    
+
+    <script>
+
+        var book={
+            "title":"Wineloy History",
+            "author":"Eloy Garcia Ceja",
+            "price":"500"
+        };
+
+        function GetBooks() {
+            fetch("http://localhost/php/public/api/books")
+            .then(request => request.json())
+            .then(data=>console.log(data));
+        }
+
+        function addBook() {
+            fetch('http://localhost/php/public/api/books/new',{
+                method:'POST',
+                body: JSON.stringify(book),
+            })
+            .then(request =>request.json())
+            .then(response=>console.log(response));
+            
+        }
+    </script>
+</body>
+</html>
