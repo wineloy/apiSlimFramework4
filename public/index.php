@@ -16,6 +16,7 @@ require '../src/config/db.php';
 
 $app = AppFactory::create();
 
+//En este caso puede cambiar dependiendo de tu directorio
 $app->setBasePath("/php/public");
 
 require '../src/routes/libros.php';
