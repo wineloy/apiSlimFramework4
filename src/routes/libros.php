@@ -26,7 +26,7 @@ $app->get('/api/books', function (Request $request, Response $response) {
     } else {
       echo json_encode("No existen libros en la BBDD.");
     }
-    $resultado = null;
+    $db = null;
     $resultado = null;
   } catch (PDOException $e) {
     echo '{"error" : {"text":' . $e->getMessage() . '}';
@@ -89,6 +89,9 @@ $app->post('/api/books/new', function (Request $request, Response $response, $ar
     $prepare->execute($book);
     echo json_encode("{'Status':{ 'Message':'Se han insertado el nuevo libro','Code':'201'}");
     
+    $prepare = null;
+    $db = null;
+
   } catch (PDOException $e) {
     echo "{'Error':'No se pudieron insertar los datos'} +$e.getMessage().";
   }
@@ -99,7 +102,7 @@ $app->post('/api/books/new', function (Request $request, Response $response, $ar
 
 //Editar Libro existente
 
-$app->put('/api/books/{id}', function(Request $request, Response $response){
+$app->put('/api/books/edit/{id}', function(Request $request, Response $response){
 
   //Obtengo el ID del libro a modificar
   $id_book = $request->getAttribute('id');
@@ -127,14 +130,12 @@ $app->put('/api/books/{id}', function(Request $request, Response $response){
 
       echo(json_encode("Libro editado correctamente"));
 
+      $prepare = null;
+      $db = null;
+
     }catch (PDOException $e) {
       echo "{'Error':'No se pudieron insertar los datos'} +$e.getMessage().";
     }
-
-
-
-
-  
   return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
 
 });
