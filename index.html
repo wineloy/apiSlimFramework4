@@ -11,12 +11,18 @@
 
 
     <button onclick="GetBooks()">Oprimeme</button>
+
     <button onclick="addBook()">New Book</button>
 
+    <div id="write">
+
+    </div>
     
 
     <script>
 
+        //Esto es un libro falso de prueba
+        var  element=document.getElementById("write");
         var book={
             "title":"Wineloy History",
             "author":"Eloy Garcia Ceja",
@@ -26,7 +32,9 @@
         function GetBooks() {
             fetch("http://localhost/php/public/api/books")
             .then(request => request.json())
-            .then(data=>console.log(data));
+            .then(data=>{
+                element.innerText=+ data.title;
+            });
         }
 
         function addBook() {
