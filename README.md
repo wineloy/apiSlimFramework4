@@ -31,10 +31,9 @@ Ejemplo esctructura para crear un nuevo libro
 
 ```
 {
-    "Title" : "Clean Code: A Handbook of Agile Software Craftsmanship"
+    "Title" : "Clean Code: A Handbook of Agile Software Craftsmanship",
     "Author" : " Robert C. Martin",
     "Price" : "843.50"
 }
 ```
 **Nota:** Tanto para **editar** como para **eliminar**, al final del endpoint se tiene que mandar el **id** y este debe ser numerico del libro a tratar 
-
