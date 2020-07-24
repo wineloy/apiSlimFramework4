@@ -5,7 +5,7 @@ class DatabaseMysql
     private $dbHost="localhost";
     private $dbUser= "root";
     private $dbPass="";
-    private $dbName="test";
+    private $dbName="books";
 
     //Create Connection
 

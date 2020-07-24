@@ -41,7 +41,7 @@ $app->get('/api/books', function (Request $request, Response $response) {
 
 $app->get('/api/books/{id}', function (Request $request, Response $response) {
   $id_book = $request->getAttribute('id');
-  
+
 
   if (!is_numeric($id_book)) {
     echo json_encode("{'Error': 'el Id introducido es invalido'}");
@@ -73,25 +73,24 @@ $app->get('/api/books/{id}', function (Request $request, Response $response) {
 // Crear nuevo Libro cliente
 
 $app->post('/api/books/new', function (Request $request, Response $response, $args) {
-//Recoleccion de datos POST
+  //Recoleccion de datos POST
   $data = json_decode($request->getBody()->getContents());
-//Mapeo de datos en variables
+  //Mapeo de datos en variables
   $title = $data->title;
   $author = $data->author;
   $price = $data->price;
 
   try {
 
-    $db=new DatabaseMysql();
-    $db=$db->ConnectionDB();
-    $prepare=$db->prepare("INSERT INTO `books` (`Title`, `Author`, `Price`) VALUES (?, ?, ?);");
-    $book =array($title, $author, $price);
+    $db = new DatabaseMysql();
+    $db = $db->ConnectionDB();
+    $prepare = $db->prepare("INSERT INTO `books` (`Title`, `Author`, `Price`) VALUES (?, ?, ?);");
+    $book = array($title, $author, $price);
     $prepare->execute($book);
-    echo json_encode("{'Status':{ 'Message':'Se han insertado el nuevo libro','Code':'201'}");
-    
+    echo json_encode("{'Status':{ 'Message':'Se ha insertado el nuevo libro','Code':'201'}");
+
     $prepare = null;
     $db = null;
-
   } catch (PDOException $e) {
     echo "{'Error':'No se pudieron insertar los datos'} +$e.getMessage().";
   }
@@ -102,40 +101,69 @@ $app->post('/api/books/new', function (Request $request, Response $response, $ar
 
 //Editar Libro existente
 
-$app->put('/api/books/edit/{id}', function(Request $request, Response $response){
+$app->put('/api/books/edit/{id}', function (Request $request, Response $response) {
 
   //Obtengo el ID del libro a modificar
   $id_book = $request->getAttribute('id');
   //Obtengo los parametros del body
   $data = json_decode($request->getBody()->getContents());
   //Mapeo de datos en variables
-    $title = $data->title;
-    $author = $data->author;
-    $price = $data->price;
+  $title = $data->title;
+  $author = $data->author;
+  $price = $data->price;
 
-    //Valido que el ususario ingrese un ID Correcto 
-    if (!is_numeric($id_book)) {
-      echo json_encode("{'Error': 'el Id introducido es invalido'}");
-      return $response->withHeader('Content-type', 'application/json');
-    }
+  //Valido que el ususario ingrese un ID Correcto 
+  if (!is_numeric($id_book)) {
+    echo json_encode("{'Error': 'el Id introducido es invalido'}");
+    return $response->withHeader('Content-type', 'application/json');
+  }
 
-    try {
-   
-      $db=new DatabaseMysql();
-      $db=$db->ConnectionDB();
-      //Preparo la consulta SQL para evitar Inyeccion SQL
-      $prepare=$db->prepare("UPDATE books SET Title=?, Author=?,Price=? WHERE id_book=?");
-      $book= array($title, $author,$price, $id_book);
-      $prepare->execute($book);
+  try {
 
-      echo(json_encode("Libro editado correctamente"));
+    $db = new DatabaseMysql();
+    $db = $db->ConnectionDB();
+    //Preparo la consulta SQL para evitar Inyeccion SQL
+    $prepare = $db->prepare("UPDATE books SET Title=?, Author=?,Price=? WHERE id_book=?");
+    $book = array($title, $author, $price, $id_book);
+    $prepare->execute($book);
 
-      $prepare = null;
-      $db = null;
+    echo (json_encode("Libro editado correctamente"));
 
-    }catch (PDOException $e) {
-      echo "{'Error':'No se pudieron insertar los datos'} +$e.getMessage().";
-    }
+    $prepare = null;
+    $db = null;
+  } catch (PDOException $e) {
+    echo "{'Error':'No se pudieron insertar los datos'} +$e.getMessage().";
+  }
   return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+});
 
+
+$app->delete('/api/books/delete/{id}', function (Request $request, Response $response) {
+
+  $id_book = $request->getAttribute('id');
+
+
+  if (!is_numeric($id_book)) {
+    echo json_encode("{'Error': 'el Id introducido es invalido'}");
+    return $response->withHeader('Content-type', 'application/json');
+  }
+
+
+  try {
+
+    $db = new DatabaseMysql();
+    $db = $db->ConnectionDB();
+    //Preparo la consulta SQL para evitar Inyeccion SQL
+    $prepare = $db->prepare("DELETE FROM books WHERE id_book=?");
+    $book = array($id_book);
+    $prepare->execute($book);
+
+    echo (json_encode("Libro Eliminado Correctamente"));
+
+    $prepare = null;
+    $db = null;
+  } catch (PDOException $e) {
+    echo "{'Error':'No se pudo eliminar el libro'} +$e.getMessage().";
+  }
+  return $response->withHeader('Content-Type', 'application/json')->withStatus(202);
 });
