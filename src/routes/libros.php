@@ -13,7 +13,7 @@ $app->setBasePath("/php/public");
 //Obtener los todos los clientes
 
 $app->get('/api/books', function (Request $request, Response $response) {
-  $sql = "SELECT * FROM books";
+  $sql = "SELECT * FROM books ORDER BY id_book";
 
   try {
     $db = new DatabaseMysql();
