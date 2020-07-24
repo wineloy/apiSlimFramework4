@@ -15,9 +15,6 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-W
 require __DIR__ . '/../vendor/autoload.php';
 require '../src/config/db.php';
 
-$container =new Container();
-
-// Set container to create App with on AppFactory
 $app = AppFactory::create();
 
 
