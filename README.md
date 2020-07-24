@@ -18,13 +18,13 @@ dependiendo de la ubicacion donde se ejecute sera o no necesario cambiarlo
 
 ## ENDPOINT 
 ### Mostrar Libros **GET**
-http://yourhost/php/public/api/books
+http://yourhost/public/api/books
 ### Agregar Libros **POST**
-http://yourhost/php/public/api/books/new
+http://yourhost/public/api/books/new
 ### Editar libro por medio de un id **PUT**
-http://yourhost/php/public/api/books/1
+http://yourhost/public/api/books/edit/15
 ### Eliminar libro por medio de un id **DELETE**
-http://yourhost/php/public/api/books/delete/1
+http://yourhost/public/api/books/delete/1
 
 ## Estructura Json para crear un libro 
 Ejemplo esctructura para crear un nuevo libro 
