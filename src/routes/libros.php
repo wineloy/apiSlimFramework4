@@ -137,7 +137,7 @@ $app->put('/api/books/edit/{id}', function (Request $request, Response $response
   return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
 });
 
-
+//Eliminar libro existente
 $app->delete('/api/books/delete/{id}', function (Request $request, Response $response) {
 
   $id_book = $request->getAttribute('id');

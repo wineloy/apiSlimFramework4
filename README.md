@@ -16,15 +16,25 @@
 Es posible que necesite cambiar el path de la aplicacion, este se encuentra en public/index.php
 dependiendo de la ubicacion donde se ejecute sera o no necesario cambiarlo
 
-# ENDPOINT 
+## ENDPOINT 
 ### Mostrar Libros **GET**
- http://localhost/php/public/api/books
+http://yourhost/php/public/api/books
 ### Agregar Libros **POST**
-http://localhost/php/public/api/books/new
+http://yourhost/php/public/api/books/new
 ### Editar libro por medio de un id **PUT**
-http://localhost/php/public/api/books/1
+http://yourhost/php/public/api/books/1
 ### Eliminar libro por medio de un id **DELETE**
-http://localhost/php/public/api/books/delete/1
+http://yourhost/php/public/api/books/delete/1
 
-**Nota:** tanto para editar como para eliminar, al final del endpoint se tiene que mandar el id del libro a tratar 
+## Estructura Json para crear un libro 
+Ejemplo esctructura para crear un nuevo libro 
+
+```
+{
+    "Title" : "Clean Code: A Handbook of Agile Software Craftsmanship"
+    "Author" : " Robert C. Martin",
+    "Price" : "843.50"
+}
+```
+**Nota:** Tanto para **editar** como para **eliminar**, al final del endpoint se tiene que mandar el **id** y este debe ser numerico del libro a tratar 
 
