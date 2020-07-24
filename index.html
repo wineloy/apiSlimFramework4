@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <!-- Required meta tags -->
@@ -10,25 +10,55 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
     <title>Books Store</title>
+
+    <style>
+        .size{
+            width: 33%;
+            margin: auto;
+        }
+    </style>
+
 </head>
 
 <body>
+
     <h1 class="text-center p-3">Lista de libros</h1>
+    <div class="row-center" id="addBook">
+        <div class="col size">
+            <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Titulo de libro</label>
+                  <input type="text " class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese titulo">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Autor</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese nombre del autor">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Precio</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Precio del libro">
+                </div>
+                <button type="submit" class="btn btn-primary mx-auto d-block" style="margin: 5px;">Crear libro</button>
+              </form>
+        </div>
+    </div>
 
-    <table class="table table-hover">
-        <thead class="text-center">
-            <th>#</th>
-            <th>Nombre Libro</th>
-            <th>Autor</th>
-            <th>Precio</th>
-        </thead>
-        <tbody id="cuerpo">
-    
-        </tbody>
-    </table>
 
+    <div class="container-fluid">
+
+        <table class="table-sm mx-auto table-hover table-dark">
+            <thead class="text-center">
+                <th>#</th>
+                <th>Nombre Libro</th>
+                <th>Autor</th>
+                <th>Precio</th>
+                <th colspan="2">Opciones</th>
+            </thead>
+            <tbody id="cuerpo">
+            </tbody>
+        </table>
+    </div>
 
     <script>
 
@@ -37,8 +67,7 @@
                 .then(request => request.json())
                 .then(data => data);
         }
-
-
+        
         async function renderTable() {
             const books = await getBookAll();
             var table = document.querySelector('#cuerpo');
@@ -51,6 +80,15 @@
                 let tdTitulo=document.createElement('td');
                 let tdAuthor=document.createElement('td');
                 let tdPrice=document.createElement('td');
+                //Creacion de boton 
+                let btnEdit= document.createElement('button');
+                let btnDelete= document.createElement('button');
+                //Asignacion de atributos
+                btnEdit.setAttribute("class","btn btn-primary m-1");
+                btnDelete.setAttribute("class","btn btn-success m-1");
+                
+                btnEdit.setAttribute('onclick','editBook()');
+
 
 
                 tdId.textContent=element.id_book;
@@ -58,13 +96,34 @@
                 tdAuthor.textContent=element.Author;
                 tdPrice.textContent='$'+element.Price+'.00';
 
+                btnEdit.textContent='Editar';
+                btnDelete.textContent='Eliminar';
+
+
                 tr.appendChild(tdId);
                 tr.appendChild(tdTitulo);
                 tr.appendChild(tdAuthor);
                 tr.appendChild(tdPrice);
 
+                tr.appendChild(btnEdit);
+                tr.appendChild(btnDelete);
+
                 table.appendChild(tr);
 
+            });
+        }
+
+        async function editBook(){
+
+            let titulo;
+            let autor;
+            let precio;
+            fetch('http://localhost/php/public/api/books/new',{
+                method:'POST',
+                body:JSON.stringify(),
+                header : {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
             });
         }
 
